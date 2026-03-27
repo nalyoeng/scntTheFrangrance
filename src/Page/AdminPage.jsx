@@ -8,7 +8,6 @@ import {
 } from "./storage";
 
 export default function Admin() {
-
   const initialFormState = {
   brand: "",
   name: "",
@@ -16,7 +15,7 @@ export default function Admin() {
   fragrance: "",
   img: "",
   discount: "",
-  quantity: "",   // NEW
+  quantity: "",   
   description: "",
   ingredients: ""
 };
@@ -82,6 +81,7 @@ export default function Admin() {
       {showForm && (
         <div className="mb-6 border p-4 rounded bg-gray-50">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            
             {["brand","name","price","fragrance","img","discount","quantity","description","ingredients"].map((field) => (
                 <input
                   key={field}
