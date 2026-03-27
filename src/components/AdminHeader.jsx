@@ -1,14 +1,14 @@
 import React from 'react'
 
-const Header = () => {
+const AdminHeader = () => {
   return (
     <div className='w-full h-[10vh] px-5 py-3 flex items-center justify-between fixed top-0 left-0 z-50 bg-white shadow-md'>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&family=Fira+Code&display=swap" rel="stylesheet"></link>
         <div className='w-[60%] flex justify-around items-center'>
             <ul className='w-[50%] flex justify-between pl-3 font-medium lg:text-xl'>
-                <li className='hover:text-gray-500 cursor-pointer'>shop</li>
-                <li className='hover:text-gray-500 cursor-pointer'>our story</li>
-                <li className='hover:text-gray-500 cursor-pointer'>contact us</li>
+                <li className='hover:text-gray-500 cursor-pointer'>Dash board</li>
+                <li className='hover:text-gray-500 cursor-pointer'>Products</li>
+                <li className='hover:text-gray-500 cursor-pointer'>Orders</li>
             </ul>
             <h1 className='font-bold text-4xl'>scnt.</h1>
         </div>
@@ -20,12 +20,8 @@ const Header = () => {
                 </svg>
             </div>
         </div>
-        <div className='flex border-1 border-gray-50 rounded-lg shadow-md'>
-            <div className='p-1.5 hover:bg-gray-200 rounded-l-lg cursor-pointer'>Log in</div>
-            <div className='bg-blue-700 rounded-r-lg cursor-pointer text-white p-1.5 hover:bg-blue-800'>Sign up</div>
-        </div>
     </div>
   )
 }
 
-export default Header
+export default AdminHeader
