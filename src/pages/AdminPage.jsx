@@ -8,6 +8,7 @@ import {
   updateProduct,
 } from "./storage";
 import AdminHeader from "../components/AdminHeader";
+import Footer from "../components/Footer";
 
 export default function Admin() {
   const initialFormState = {
@@ -64,9 +65,17 @@ export default function Admin() {
     setEditingId(p.id);
     setShowForm(true);
   };
+// Pagination state
+  const [page, setPage] = useState(1);
+  const productsPerPage = 10; // how many products per page
+  const totalPages = Math.ceil(products.length / productsPerPage);
 
+  // Slice products for current page
+  const startIndex = (page - 1) * productsPerPage;
+  const endIndex = startIndex + productsPerPage;
+  const currentProducts = products.slice(startIndex, endIndex);
   return (
-    <div className="h-[100vh] max-w-6xl mx-auto p-6 bg-white rounded shadow">
+    <div className="h-[100vh] pt-[10vh] max-w-6xl mx-auto p-6 ">
       <AdminHeader/>
       <h2 className="text-2xl font-bold mb-6 mt-10">Admin Panel</h2>
 
@@ -122,7 +131,7 @@ export default function Admin() {
       <hr className="my-6" />
       <h3 className="text-xl font-semibold mb-4">Products</h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {products.map((p) => (
+      {currentProducts.map((p) => (
           <div key={p.id} className="relative bg-gray-100 p-4 rounded shadow">
             {p.img && (
               <img
@@ -176,7 +185,22 @@ export default function Admin() {
           </div>
         ))}
       </div>
-
+      {/* Pagination */}
+      <div className="flex justify-center items-center gap-2 mt-10">
+        {[...Array(totalPages)].map((items, i) => (
+          <span
+            key={i}
+            onClick={() => setPage(i + 1)}
+            className={`w-3 h-3 rounded-full cursor-pointer ${
+              page === i + 1 ? "bg-black" : "bg-gray-400"
+            }`}
+          ></span>
+        ))}
+        <div className="ml-4 border px-3 py-1 rounded bg-white">
+          {page} / {totalPages}
+        </div>
+      </div>
+    {/* <Footer/> */}
     </div>
   );
 }

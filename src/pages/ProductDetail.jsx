@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom";
 import React from "react";
 import {products} from "./ProductGrid"
- // shared product array
+
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 export default function ProductDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -108,6 +109,8 @@ export default function ProductDetail() {
             </div>
           ))}
       </div>
+    {/* <Footer/>   */}
     </div>
+    
   );
 }
