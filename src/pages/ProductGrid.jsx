@@ -2,7 +2,10 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { getProducts } from "./storage";
+import Header from "../components/Header";
+
 export const products = getProducts();
+
 export default function ProductGrid() {
   const navigate = useNavigate();
   // lets you move between pages when clicking a product.
@@ -32,10 +35,10 @@ export default function ProductGrid() {
   const currentProducts = products.slice(startIndex, endIndex);
 
   return (
-    <div className="bg-gray-100 min-h-screen p-6">
-
+    <div className="w-full h-[100vh]">
+      <Header/>
       {/* Intro */}
-      <div className="text-center max-w-3xl mx-auto mb-10">
+      <div className="text-center mt-[25vh]">
         <h1 className="text-4xl font-bold mb-3">Scnt Perfume</h1>
         <p className="text-gray-600">
           Trusted by thousands of fragrance lovers, our platform offers a diverse
@@ -53,7 +56,7 @@ export default function ProductGrid() {
       </div>
 
       {/* Filters */}
-      <div className="flex justify-center gap-4 mb-10 flex-wrap">
+      <div className="flex justify-center gap-4 mb-10 flex-wrap mt-10">
         <select className="border rounded p-2">
           <option>Filter by Brand</option>
           <option>Amber</option>
@@ -91,7 +94,7 @@ export default function ProductGrid() {
 
       {/* Promo Slideshow */}
       <h2 className="text-center text-2xl font-semibold mb-6">DON'T MISS OUT!</h2>
-      <div className="max-w-4xl  ml-70 mb-12">
+      <div className="m-5">
         <img
           src={promoImages[promoIndex]}
           alt="promo"
@@ -113,7 +116,7 @@ export default function ProductGrid() {
 
 
       {/* Products */}
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-7xl mx-auto mt-4">
+      <div className="mt-10 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-7xl mx-auto mt-4">
         {currentProducts.map((p) => (
           <div
             key={p.id}

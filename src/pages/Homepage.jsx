@@ -4,13 +4,13 @@ import Carousel from '../components/Carousel'
 import {Products} from '../productDetails'
 import Contactus from '../components/Contactus'
 import Footer from '../components/Footer'
+
 const Homepage = () => {
   const displayProducts = Products.slice(0, 4);
   
   return (
-    <div>
+    <div className='h-[100vh] pt-[10vh]'>
       <Header/>
-
       <div className=' w-full h-[25vh] flex flex-col justify-center items-center mt-[10vh]'>
         <h1 className='text-[45px]'>Quality & Affordable</h1>
         <h1 className='text-[45px]'>Support our Local Brands</h1>
@@ -35,7 +35,7 @@ const Homepage = () => {
         </div>
       </div>
 
-      <div className='w-[60%] flex flex-col justify-content-center items-center m-auto pt-3 my-10'>
+      <div id='our-story' className='scroll-mt-[10vh] w-[60%] flex flex-col justify-content-center items-center m-auto pt-3 my-10'>
         <h1 className='text-[45px]'>Our Story</h1>
         <p className='text-[28px] text-center pt-3'>Minimalism in design, complexity in scent. We believe in "Quiet Luxury." No loud branding, no synthetic fillers. Just high-quality, locally sourced ingredients that linger long after you’ve left the room.</p>
       </div>
