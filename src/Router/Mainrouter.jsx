@@ -1,3 +1,11 @@
+import React from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import Homepage from '../pages/Homepage'
+import ProductGrid from '../pages/ProductGrid'
+import Admin from '../pages/AdminPage'
+import ProductDetail from '../pages/ProductDetail'
+import Login from '../components/Login'
+import Header from '../components/Header' // Import your header here
 
 import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
