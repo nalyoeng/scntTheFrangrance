@@ -1,11 +1,13 @@
 
 import React, { useEffect, useState } from "react";
+
 import {
   getProducts,
   addProduct,
   deleteProduct,
   updateProduct,
 } from "./storage";
+import AdminHeader from "../components/AdminHeader";
 
 export default function Admin() {
   const initialFormState = {
@@ -64,8 +66,9 @@ export default function Admin() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6 bg-white rounded shadow">
-      <h2 className="text-2xl font-bold mb-6">Admin Panel</h2>
+    <div className="h-[100vh] max-w-6xl mx-auto p-6 bg-white rounded shadow">
+      <AdminHeader/>
+      <h2 className="text-2xl font-bold mb-6 mt-10">Admin Panel</h2>
 
       {/* Toggle button */}
       {!showForm && (

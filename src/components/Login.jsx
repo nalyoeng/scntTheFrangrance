@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './Login.css'
 
-function Login() {
+const Login = () => {
   const [action, setAction] = useState("Sign Up");
 
   return (

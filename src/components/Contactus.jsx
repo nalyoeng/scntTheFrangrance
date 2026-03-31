@@ -2,7 +2,7 @@ import React from 'react'
 
 const Contactus = () => {
   return (
-    <div className='w-[80%] m-auto border-0 bg-gray-50 p-5 rounded-xl shadow-md shadow-gray-400 mt-[50px] flex justify-content-around'>
+    <div id='contact' className='scroll-mt-[10vh] w-[80%] m-auto border-0 bg-gray-50 p-5 rounded-xl shadow-md shadow-gray-400 mt-[50px] flex justify-content-around'>
         <div className='w-[50%] flex flex-col items-center'>
             <h1 className='font-bold text-[30px] text-center'>Get in touch</h1>
             <div className='flex flex-col justify-center items-center pt-5'>

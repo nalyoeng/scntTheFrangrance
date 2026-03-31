@@ -2,15 +2,18 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { getProducts } from "./storage";
+import Header from "../components/Header";
 export const products = getProducts();
+
+
+
+
 export default function ProductGrid() {
   const navigate = useNavigate();
   // lets you move between pages when clicking a product.
   // Promo slideshow state
   const promoImages = ["/pic020.jpg", "/pic001.jpg", "/pic021.jpg", "/pic023.jpg"];
   const [promoIndex, setPromoIndex] = useState(0);
-
-
   useEffect(() => {
   //  setInterval browser function that repeats code every X milliseconds.
     const interval = setInterval(() => {
@@ -32,10 +35,10 @@ export default function ProductGrid() {
   const currentProducts = products.slice(startIndex, endIndex);
 
   return (
-    <div className="bg-gray-100 min-h-screen p-6">
-
+    <div className="h-[100vh] pt-[10vh]">
+      <Header/>
       {/* Intro */}
-      <div className="text-center max-w-3xl mx-auto mb-10">
+      <div className="text-center max-w-full mx-auto mt-5 mb-10">
         <h1 className="text-4xl font-bold mb-3">Scnt Perfume</h1>
         <p className="text-gray-600">
           Trusted by thousands of fragrance lovers, our platform offers a diverse
@@ -53,21 +56,21 @@ export default function ProductGrid() {
       </div>
 
       {/* Filters */}
-      <div className="flex justify-center gap-4 mb-10 flex-wrap">
-        <select className="border rounded p-2">
+      <div className="flex justify-center gap-4 mb-10 ">
+        <select className="border rounded p-2 cursor-pointer">
           <option>Filter by Brand</option>
           <option>Amber</option>
           <option>mera</option>
           <option>The LAB</option>
         </select>
 
-        <select className="border rounded p-2">
+        <select className="border rounded p-2 cursor-pointer">
           <option>Filter by Price</option>
           <option>Under $100</option>
           <option>Under $150</option>
         </select>
 
-        <select className="border rounded p-2">
+        <select className="border rounded p-2 cursor-pointer">
           <option>Filter by Fragrance</option>
           <option>Woody</option>
           <option>Floral</option>
@@ -77,11 +80,11 @@ export default function ProductGrid() {
 
       {/* Local Brands */}
       <h2 className="text-center text-2xl font-semibold mb-6">Local Brands</h2>
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-4xl mx-auto mb-12">
+      <div className="grid md:grid-cols-5 gap-4 max-w-4xl mx-auto mb-12">
         {localBrands.map((brand) => (
           <div
             key={brand}
-            className="bg-white rounded-lg shadow flex items-center justify-center h-18 text-center hover:shadow-lg cursor-pointer"
+            className="bg-white rounded-lg shadow flex items-center justify-center h-18 text-center hover:shadow-lg cursor-pointer "
           >
             <p className="font-semibold">{brand}</p>
           </div>
@@ -91,24 +94,25 @@ export default function ProductGrid() {
 
       {/* Promo Slideshow */}
       <h2 className="text-center text-2xl font-semibold mb-6">DON'T MISS OUT!</h2>
-      <div className="max-w-4xl  ml-70 mb-12">
-        <img
-          src={promoImages[promoIndex]}
-          alt="promo"
-          className="w-full h-120 object-cover rounded shadow transition-transform duration-500 hover:scale-105"
-        />
-      </div>
-      <div className="flex justify-center gap-2 mt-2">
-        {promoImages.map((_, i) => (
-          <span
-            key={i}
-            onClick={() => setPromoIndex(i)}
-            className={`w-3 h-3 rounded-full cursor-pointer ${
-              promoIndex === i ? "bg-black" : "bg-gray-400"
-            }`}
-          ></span>
-        ))}
-      </div>
+        <div className="max-w-4xl mx-auto mb-12">
+          <img
+            src={promoImages[promoIndex]}
+            alt="promo"
+            className="w-full h-120 object-cover rounded shadow transition-opacity duration-500"
+          />
+        </div>
+        <div className="flex justify-center gap-2 mt-2">
+          {promoImages.map((_, i) => (
+            <span
+              key={i}
+              onClick={() => setPromoIndex(i)}
+              className={`w-3 h-3 rounded-full cursor-pointer ${
+                promoIndex === i ? "bg-black" : "bg-gray-400"
+              }`}
+            ></span>
+          ))}
+        </div>
+
 
 
 
@@ -124,7 +128,7 @@ export default function ProductGrid() {
               <img
                   src={p.img}
                   alt={p.name}
-                  className="w-full h-44 object-cover rounded-t-md"
+                  className="w-full h-32 object-cover rounded-t-md"
                 />
 
 
@@ -163,7 +167,7 @@ export default function ProductGrid() {
 
       {/* Pagination */}
       <div className="flex justify-center items-center gap-2 mt-10">
-        {[...Array(totalPages)].map((_, i) => (
+        {[...Array(totalPages)].map((items, i) => (
           <span
             key={i}
             onClick={() => setPage(i + 1)}
