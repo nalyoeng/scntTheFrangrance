@@ -3,8 +3,13 @@ import './Login.css'
 import google from '../assets/google.png'
 import fb from '../assets/fb.png'
 
+<<<<<<< HEAD
 function Login() {
   const [action, setAction] = useState("Login");
+=======
+const Login = () => {
+  const [action, setAction] = useState("Sign Up");
+>>>>>>> 53a612aeeb3e142009342c59f6aa459fd124943e
 
   return (
     <div>
