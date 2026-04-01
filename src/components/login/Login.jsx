@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
 import './Login.css'
-import google from '../assets/google.png'
-import fb from '../assets/fb.png'
 
 function Login() {
-  const [action, setAction] = useState("Login");
+  const [action, setAction] = useState("Sign Up");
 
   return (
     <div>
@@ -55,13 +53,6 @@ function Login() {
           onClick={() => setAction("Login")}
         >
           Login
-        </div>
-        <div>
-          <div>login with</div>
-          <div>
-            <img src={fb} alt="Facebook" />
-            <img src={google} alt="Google" />
-          </div>
         </div>
       </div>
     </div>
