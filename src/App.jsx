@@ -1,11 +1,9 @@
 import React from "react";
 import { useEffect } from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { products as initialProducts } from "./pages/products"; // your products.js
+import { products as initialProducts } from "./pages/products"; 
 import { initProducts } from "./pages/storage";
 import Mainrouter from "./Router/Mainrouter";
-import Homepage from "./pages/Homepage";
-
+import { AuthProvider } from "./context/AuthContext";
 
 export default function App() {
   useEffect(() => {
@@ -14,8 +12,8 @@ export default function App() {
   }, []);
 
   return (
-    <div className="">
+    <AuthProvider> 
       <Mainrouter/>
-    </div>
+    </AuthProvider>
   );
 };

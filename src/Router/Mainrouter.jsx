@@ -1,32 +1,52 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
+import { AuthProvider } from '../context/AuthContext' // 1. Important! Wrap the brain
+import ProtectedRoute from './ProtectedRoute'        // 2. The Gatekeeper
+
+// Page Imports
 import Homepage from '../pages/Homepage'
 import ProductGrid from '../pages/ProductGrid'
 import Admin from '../pages/AdminPage'
 import ProductDetail from '../pages/ProductDetail'
 import Login from '../components/Login'
-import Header from '../components/Header' // Import your header here
+import SignUp from '../components/SignUp'
+import HomeLayout from '../pages/HomeLayout'
+import UserManagement from '../pages/Usermanagment'
+import AdminManagement from '../pages/AdminManagement'
 
-const Mainrouter = () => {
-  return (
+const Mainrouter = () => (
+  <AuthProvider> {/* Wrap the whole router so every page knows who is logged in */}
     <Router>
-        <div className="min-h-screen flex flex-col"> 
+      <div className="min-h-screen flex flex-col">
+        <main className="flex-grow">
+          <Routes>
             
-            <main className="flex-grow">
-                <Routes>
-                    <Route path="/" element={<Homepage />} />
-                    <Route path="/homepage" element={<Homepage />} />
-                    <Route path="/productgrid" element={<ProductGrid />} />
-                    <Route path="/admin" element={<Admin />} />
-                    <Route path="/product/:id" element={<ProductDetail />} />
-                    <Route path="/login" element={<Login />} />
-                    {/* Added the missing element for signin */}
-                    <Route path="/signin" element={<Login />} /> 
-                </Routes>
-            </main>
-        </div>
+            {/* Public Shop Routes (Inside HomeLayout for Header/Footer) */}
+            <Route path='/' element={<HomeLayout />}>
+              <Route index element={<Homepage />} /> {/* Shows at "/" */}
+              <Route path="productgrid" element={<ProductGrid />} />
+              <Route path="product/:id" element={<ProductDetail />} />
+            </Route>
+            
+            {/* Auth Routes (Usually outside layouts for a clean look) */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+
+            {/* 🛡️ Protected Admin Routes (Only accessible by logged-in Admins) */}
+            <Route path="/admin" element={<ProtectedRoute />}>
+               <Route index element={<Admin />} /> {/* Shows at "/admin" */}
+               <Route path="users" element={<UserManagement />} /> {/* Shows at "/admin/users" */}
+               <Route path="management" element={<AdminManagement />} /> {/* Shows at "/admin/management" */}
+            </Route>
+
+            {/* Catch-all: If user types a wrong URL, go home */}
+            <Route path="*" element={<Navigate to="/" />} />
+            
+          </Routes>
+        </main>
+      </div>
     </Router>
-  )
-}
+  </AuthProvider>
+)
 
 export default Mainrouter

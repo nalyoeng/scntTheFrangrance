@@ -40,7 +40,7 @@ const Header = () => {
 
       {/* Auth Buttons */}
       <div className='flex items-center border border-gray-200 rounded-full overflow-hidden shadow-sm'>
-        <button className='px-5 py-1.5 hover:bg-gray-100 transition-colors text-sm font-medium'>Log in</button>
+        <button className='px-5 py-1.5 hover:bg-gray-100 transition-colors text-sm font-medium'><Link to="/login">Log in</Link></button>
         <button className='bg-black text-white px-5 py-1.5 hover:bg-gray-800 transition-colors text-sm font-medium'>Sign up</button>
       </div>
     </nav>
