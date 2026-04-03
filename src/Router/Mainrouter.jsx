@@ -9,7 +9,6 @@ import ProductGrid from '../pages/ProductGrid'
 import Admin from '../pages/AdminPage'
 import ProductDetail from '../pages/ProductDetail'
 import Login from '../components/Login'
-import SignUp from '../components/SignUp'
 import HomeLayout from '../pages/HomeLayout'
 import UserManagement from '../pages/Usermanagment'
 import AdminManagement from '../pages/AdminManagement'
@@ -30,7 +29,6 @@ const Mainrouter = () => (
             
             {/* Auth Routes (Usually outside layouts for a clean look) */}
             <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
 
             {/* 🛡️ Protected Admin Routes (Only accessible by logged-in Admins) */}
             <Route path="/admin" element={<ProtectedRoute />}>

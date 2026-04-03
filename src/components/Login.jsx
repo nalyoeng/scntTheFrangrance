@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate, useLocation } from 'react-router-dom'; 
 import { useAuth } from '../context/AuthContext'; 
 import './Login.css';
 import { UserStorage } from '../pages/user'; 
-import './Login.css'
 import google from '../assets/google.png'
 import fb from '../assets/fb.png'
 
@@ -14,7 +13,9 @@ const Login = () => {
   const [password, setPassword] = useState("");
   
   const navigate = useNavigate(); 
-  const { login } = useAuth();    
+  const location = useLocation();
+  const { login } = useAuth();   
+  const from = location.state?.from; 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,11 +45,12 @@ const Login = () => {
       if (adminFound) {
         login({ ...adminFound, role: 'admin' }); // Tag as Admin
         alert("Welcome, Admin");
-        navigate("/admin"); 
+        navigate(from || "/admin"); 
       } else if (userFound) {
         login({ ...userFound, role: 'user' }); // Tag as User
         alert("Welcome back to SCNT. Fragrance!");
-        navigate("/"); // Send regular users to the home/shop page
+        // Send the customer back to the perfume they wanted to add to cart!
+        navigate(from || "/");
       } else {
         alert("Invalid credentials. If you are a new customer, please Sign Up.");
       }
