@@ -1,8 +1,10 @@
 import { useParams } from "react-router-dom";
 import React from "react";
 import {products} from "./ProductGrid"
- // shared product array
+
 import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 export default function ProductDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -13,8 +15,9 @@ export default function ProductDetail() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-8 bg-white rounded-lg shadow-lg">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+    <div className="min-h-screen pt-[10vh] max-w-6xl mx-auto p-8 bg-white rounded-lg shadow-lg">
+      <Header/>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center mt-70">
         {/* Product image */}
         <div className="flex justify-center">
           <img
@@ -41,7 +44,7 @@ export default function ProductDetail() {
               </span>
             </div>
           ) : (
-            <p className="text-3xl font-bold mb-4">${product.price}</p>
+            <p className="text-3xl font-bold  mt-18 mb-4">${product.price}</p>
           )}
 
           {/* Stock status */}
@@ -106,6 +109,8 @@ export default function ProductDetail() {
             </div>
           ))}
       </div>
+    {/* <Footer/>   */}
     </div>
+    
   );
 }

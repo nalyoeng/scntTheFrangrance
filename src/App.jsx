@@ -1,15 +1,19 @@
 import React from "react";
-import { useEffect } from "react";
-import { products as initialProducts } from "./pages/products"; 
-import { initProducts } from "./pages/storage";
 import Mainrouter from "./Router/Mainrouter";
 import { AuthProvider } from "./context/AuthContext";
 
-export default function App() {
-  useEffect(() => {
-    // Seed localStorage with products.js data if not already present
-    initProducts(initialProducts);
-  }, []);
+import Login from "./components/Login";
+const Login_s=Login
+import './App.css'
+import Checkout from "./components/payment";
+const Checkout_s=Checkout
+import Order from "./components/order";
+
+const Order_s=Order
+
+const App = () => {
+
+  
 
   return (
     <AuthProvider> 
@@ -17,3 +21,6 @@ export default function App() {
     </AuthProvider>
   );
 };
+
+export default App;
+ 

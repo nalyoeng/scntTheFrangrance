@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { useAuth } from '../context/AuthContext'; 
 import './Login.css';
-  import { UserStorage } from '../pages/user'; 
+import { UserStorage } from '../pages/user'; 
+import './Login.css'
+import google from '../assets/google.png'
+import fb from '../assets/fb.png'
 
 const Login = () => {
   const [action, setAction] = useState("Sign Up");
@@ -112,6 +115,13 @@ const Login = () => {
           onClick={() => { setAction("Login"); setName(""); }}
         >
           Switch to Login
+        </div>
+        <div>
+          <div>login with</div>
+          <div>
+            <img src={fb} alt="Facebook" />
+            <img src={google} alt="Google" />
+          </div>
         </div>
       </div>
     </div>
