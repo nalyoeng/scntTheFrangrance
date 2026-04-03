@@ -31,11 +31,11 @@ const Login = () => {
 
     } else {
       // 2. LOGIN LOGIC (Check Admins first, then Users)
-      
-      // Get Admins from your JSON list (the one you mentioned)
-      const adminList = JSON.parse(localStorage.getItem("admins")) || UserStorage.adminUsers;
-      // Get Registered Users from LocalStorage
-      const userList = JSON.parse(localStorage.getItem("users") || "[]");
+      const storedAdmins = JSON.parse(localStorage.getItem("admins") || "[]");
+      const storedUsers = JSON.parse(localStorage.getItem("users") || "[]");
+
+      const adminList = [...UserStorage.adminUsers, ...storedAdmins];
+      const userList = [...UserStorage.users, ...storedUsers];
 
       // Search for Admin match
       const adminFound = adminList.find(a => a.email === email && a.pwd === password);
