@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
+import { UserStorage } from '../pages/user';
 
 // 1. Create the Context (The "Cloud")
 const AuthContext = createContext();
@@ -15,20 +16,25 @@ export const AuthProvider = ({ children }) => {
   };
 
   // 2. Check localStorage when the app first starts
-  useEffect(() => {
-    try {
-      const savedUser = localStorage.getItem('current_user');
-      if (savedUser && savedUser !== "undefined") {
-        setUser(JSON.parse(savedUser));
-      }
-    } catch (error) {
-      console.error("AuthContext Error:", error);
-    } finally {
-      // This will now run even if the code above fails!
-      refreshCartCount();
-      setLoading(false); 
-    }
-  }, []);
+ useEffect(() => {
+  // 1. Check if users are already in storage
+  const localUsers = localStorage.getItem('users');
+  const localAdmins = localStorage.getItem('admins');
+
+  // 2. If storage is empty, "Seed" it with your JSON data
+  if (!localUsers) {
+    localStorage.setItem('users', JSON.stringify(UserStorage.users));
+  }
+  if (!localAdmins) {
+    localStorage.setItem('admins', JSON.stringify(UserStorage.adminUsers));
+  }
+
+  // 3. Continue with your normal loading logic...
+  const savedUser = localStorage.getItem('current_user');
+  if (savedUser) setUser(JSON.parse(savedUser));
+  
+  setLoading(false);
+}, []);
 
   // 3. Function to log in
   const login = (userData) => {

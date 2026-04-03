@@ -48,7 +48,7 @@ export default function ProductDetail() {
   }
 
   return (
-    <div className="min-h-screen pt-[10vh] max-w-6xl mx-auto p-8 bg-white rounded-lg shadow-lg">
+    <div className="min-h-screen pt-[10vh] mt-[150px] max-w-6xl mx-auto p-8 bg-white rounded-lg shadow-lg">
       <Header/>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center mt-70">
         {/* Product image */}
@@ -61,7 +61,7 @@ export default function ProductDetail() {
         </div>
 
         {/* Product info */}
-        <div>
+        <div className="w-full ">
           <h1 className="text-4xl font-bold mb-4">{product.name}</h1>
           <p className="text-lg text-gray-700 mb-2">{product.brand}</p>
           <p className="text-md text-gray-500 mb-6">{product.fragrance}</p>
