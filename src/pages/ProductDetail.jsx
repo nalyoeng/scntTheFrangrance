@@ -1,15 +1,48 @@
 import { useParams } from "react-router-dom";
 import React from "react";
 import {products} from "./ProductGrid"
-
+import { useAuth } from "../context/AuthContext"
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+
 export default function ProductDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
   const product = products.find((p) => p.id === parseInt(id));
+  const { user, refreshCartCount } = useAuth(); // Check if user is logged in
 
+  const handleAddToCart = () => {
+    if (!user) {
+      alert("Please login to start shopping your favorite scents!");
+      navigate('/login', { state: { from: `/product/${id}` } });
+    } else {
+      // 1. Get the current cart from storage
+      const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+      // 2. Check if product is already in the cart to avoid duplicates
+      const isAlreadyInCart = existingCart.find((item) => item.id === product.id);
+
+      let updatedCart;
+
+      if (isAlreadyInCart) {
+        // If it exists, just increase the quantity
+        updatedCart = existingCart.map((item) =>
+          item.id === product.id ? { ...item, quantity: (item.quantity || 1) + 1 } : item
+        );
+      } else {
+        // If it's new, add the product with quantity 1
+        updatedCart = [...existingCart, { ...product, quantity: 1 }];
+      }
+
+      // 3. Save the new list to localStorage
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+    
+      // 4. Update the global Header count
+      refreshCartCount(); 
+      alert(`${product.name} added to cart!`);
+    }
+  };
   if (!product) {
     return <p className="text-center mt-10 text-gray-600">Product not found</p>;
   }
@@ -78,10 +111,10 @@ export default function ProductDetail() {
 
           {/* Buttons */}
           <div className="mt-6 flex gap-4">
-            <button className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+            <button onClick={handleAddToCart} className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
               Add to Cart
             </button>
-            <button className="flex-1 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+            <button onClick={handleAddToCart} className="flex-1 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
               Buy Now
             </button>
           </div>

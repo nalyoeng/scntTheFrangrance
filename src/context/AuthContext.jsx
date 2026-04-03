@@ -5,19 +5,29 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [cartCount, setCartCount] = useState(0);
   const [loading, setLoading] = useState(true);
+
+  const refreshCartCount = () => {
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const total = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+    setCartCount(total);
+  };
 
   // 2. Check localStorage when the app first starts
   useEffect(() => {
-    const savedUser = localStorage.getItem('current_user');
-    if (savedUser && savedUser !== "undefined") {
-      try {
+    try {
+      const savedUser = localStorage.getItem('current_user');
+      if (savedUser && savedUser !== "undefined") {
         setUser(JSON.parse(savedUser));
-      } catch (error) {
-        console.error("Failed to parse user:", error);
       }
+    } catch (error) {
+      console.error("AuthContext Error:", error);
+    } finally {
+      // This will now run even if the code above fails!
+      refreshCartCount();
+      setLoading(false); 
     }
-    setLoading(false);
   }, []);
 
   // 3. Function to log in
@@ -33,7 +43,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, loading, cartCount, refreshCartCount }}>
       {/* We don't render the app until we've finished checking localStorage */}
       {!loading && children}
     </AuthContext.Provider>
