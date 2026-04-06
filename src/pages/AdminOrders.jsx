@@ -20,7 +20,7 @@ const AdminOrders = () => {
     <div className='min-h-screen bg-[#f8f9fa] pb-20'>
       <AdminHeader />
       
-      <main className='max-w-7xl mx-auto px-4 md:px-8 pt-32'>
+      <main className='max-w-7xl mx-auto px-4 mt-50 md:px-8 pt-32'>
         {/* --- HEADER SECTION --- */}
         <div className='flex flex-col md:flex-row justify-between items-end gap-6 mb-10'>
           <div className='w-full md:w-auto'>

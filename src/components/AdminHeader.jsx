@@ -35,6 +35,16 @@ const AdminHeader = () => {
                     <Settings size={14}/> CRUD / Manage
                 </Link>
             </li>
+            <li className={`${isActive('/admin/admins')} hover:text-black transition-colors`}>
+                <Link to="/admin/admins" className="flex items-center gap-2 text-nowrap">
+                    <Settings size={14}/> Manage Admin
+                </Link>
+            </li>
+            <li className={`${isActive('/admin/users')} hover:text-black transition-colors`}>
+                <Link to="/admin/users" className="flex items-center gap-2 text-nowrap">
+                    <Settings size={14}/> Manage Users
+                </Link>
+            </li>
         </ul>
       </div>
 
