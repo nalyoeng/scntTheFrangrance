@@ -10,7 +10,10 @@ const AdminLayout = () => {
   return (
     <div>
         <AdminHeader/>
-        {isLoggedIn ? <Login/> : <Outlet/>}
+        <main className='w-full'>
+          {isLoggedIn ? <Login/> : <Outlet/>}
+        </main>
+        
     </div>
   )
 }

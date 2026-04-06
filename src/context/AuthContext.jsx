@@ -5,13 +5,22 @@ import { UserStorage } from '../pages/user';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const saved = localStorage.getItem('current_user');
+    return saved ? JSON.parse(saved) : null;
+  });
   const [cartCount, setCartCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
   const refreshCartCount = () => {
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const total = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+    
+    // We sum up 'quantity_requested'. 
+    // We use || 1 as a fallback just in case an item was added without a qty.
+    const total = cart.reduce((sum, item) => {
+      return sum + (item.quantity_requested || 1);
+    }, 0);
+    
     setCartCount(total);
   };
 
@@ -33,6 +42,7 @@ export const AuthProvider = ({ children }) => {
   const savedUser = localStorage.getItem('current_user');
   if (savedUser) setUser(JSON.parse(savedUser));
   
+  refreshCartCount();
   setLoading(false);
 }, []);
 

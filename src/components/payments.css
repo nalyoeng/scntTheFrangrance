@@ -6,6 +6,7 @@
   font-family: Arial, sans-serif;
   width: 100%;
   max-width: 1400px;
+  margin-top: 200px;
 }
 
 .left {
@@ -21,7 +22,7 @@
 
 /* ITEMS */
 .items-box {
-  border: 2px solid #616264;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   padding: 15px;
   border-radius: 5px;
   margin-bottom: 20px;
@@ -42,7 +43,7 @@
 .item-card {
   display: flex;
   align-items: center;
-  border: 1px solid #aaa;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
   border-radius: 8px;
   padding: 10px;
   margin-top: 15px;
@@ -181,15 +182,37 @@
 }
 
 .payment-methods img.active {
-  border-color: #ff69b4;
+  border-color: #e01276;
   box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
 }
 .pay-btn {
   width: 100%;
   padding: 12px;
-  background: pink;
+  background: rgb(245, 27, 27);
   border: none;
   border-radius: 8px;
   cursor: pointer;
   margin-top: 30px;
+  color: white;
+}
+.pay-btn:hover{
+  background-color: rgb(244, 49, 49);
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 50px;
+    border-radius: 40px;
+    text-align: center;
+    max-width: 400px;
 }

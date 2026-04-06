@@ -1,149 +1,164 @@
-import { useParams } from "react-router-dom";
-import React from "react";
-import {products} from "./ProductGrid"
-import { useAuth } from "../context/AuthContext"
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { products } from "./ProductGrid";
+import { useAuth } from "../context/AuthContext";
 import Header from "../components/Header";
-import Footer from "../components/Footer";
 
 export default function ProductDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
   const product = products.find((p) => p.id === parseInt(id));
-  const { user, refreshCartCount } = useAuth(); // Check if user is logged in
+  const { user, refreshCartCount } = useAuth();
+  const [qty, setQty] = useState(1); 
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (isBuyNow = false) => {
     if (!user) {
       alert("Please login to start shopping your favorite scents!");
       navigate('/login', { state: { from: `/product/${id}` } });
+      return;
+    }
+
+    // 1. Get existing cart
+    const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const itemIndex = existingCart.findIndex((item) => item.id === product.id);
+
+    let updatedCart = [...existingCart];
+
+    if (itemIndex > -1) {
+      // 2. If item exists, add the NEW quantity to the EXISTING quantity
+      // We use 'quantity_requested' to match your CartPage logic
+      const currentQty = updatedCart[itemIndex].quantity_requested || 1;
+      updatedCart[itemIndex].quantity_requested = currentQty + qty;
     } else {
-      // 1. Get the current cart from storage
-      const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
+      // 3. If item is new, push it with 'quantity_requested'
+      updatedCart.push({ 
+        ...product, 
+        quantity_requested: qty 
+      });
+    }
 
-      // 2. Check if product is already in the cart to avoid duplicates
-      const isAlreadyInCart = existingCart.find((item) => item.id === product.id);
+    // 4. Save and Update
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    refreshCartCount();
 
-      let updatedCart;
-
-      if (isAlreadyInCart) {
-        // If it exists, just increase the quantity
-        updatedCart = existingCart.map((item) =>
-          item.id === product.id ? { ...item, quantity: (item.quantity || 1) + 1 } : item
-        );
-      } else {
-        // If it's new, add the product with quantity 1
-        updatedCart = [...existingCart, { ...product, quantity: 1 }];
-      }
-
-      // 3. Save the new list to localStorage
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
-    
-      // 4. Update the global Header count
-      refreshCartCount(); 
+    if (isBuyNow) {
+      // Direct to payment, passing the current product ID in the state
+      // so the checkout knows what we are buying
+      navigate('/payment', { 
+        state: { 
+          fromCart: false, // Tell payment page this is a direct buy
+          items: [product.id] 
+        } 
+      });
+    } else {
       alert(`${product.name} added to cart!`);
     }
   };
-  if (!product) {
-    return <p className="text-center mt-10 text-gray-600">Product not found</p>;
-  }
+
+  if (!product) return <div className="h-screen flex items-center justify-center text-gray-500">Product not found</div>;
 
   return (
-    <div className="min-h-screen pt-[10vh] mt-[150px] max-w-6xl mx-auto p-8 bg-white rounded-lg shadow-lg">
-      <Header/>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center mt-70">
-        {/* Product image */}
-        <div className="flex justify-center">
-          <img
-            src={product.img}
-            alt={product.name}
-            className="w-full max-w-md h-130 object-cover rounded-lg shadow-md"
-          />
-        </div>
-
-        {/* Product info */}
-        <div className="w-full ">
-          <h1 className="text-4xl font-bold mb-4">{product.name}</h1>
-          <p className="text-lg text-gray-700 mb-2">{product.brand}</p>
-          <p className="text-md text-gray-500 mb-6">{product.fragrance}</p>
-
-          {product.discount ? (
-            <div className="mb-4">
-              <p className="line-through text-gray-400 text-lg">${product.price}</p>
-              <p className="text-3xl font-bold text-red-600">
-                ${(product.price * (1 - product.discount / 100)).toFixed(2)}
-              </p>
-              <span className="inline-block mt-2 bg-red-500 text-white text-xs px-3 py-1 rounded-full">
-                {product.discount}% OFF
-              </span>
+    <div className="bg-gray-50 min-h-screen mt-10">
+      <Header />
+      
+      <main className="max-w-7xl mx-auto px-4 py-12 pt-32">
+        <div className="bg-white rounded-3xl shadow-sm overflow-hidden border border-gray-100">
+          <div className="flex flex-col lg:flex-row">
+            
+            {/* Left: Image */}
+            <div className="lg:w-1/2 p-8 lg:p-12 bg-gray-50 flex items-start justify-center text-center">
+              <div className="sticky top-32 w-full">
+                <img
+                  src={product.img}
+                  alt={product.name}
+                  className="w-full aspect-[4/5] object-cover rounded-2xl shadow-2xl transition hover:scale-[1.01] duration-500"
+                />
+              </div>
             </div>
-          ) : (
-            <p className="text-3xl font-bold  mt-18 mb-4">${product.price}</p>
-          )}
 
-          {/* Stock status */}
-          {product.quantity > 0 ? (
-            <p className="mt-2 text-green-600 font-semibold">
-              In Stock: {product.quantity}
-            </p>
-          ) : (
-            <p className="mt-2 text-red-600 font-semibold">
-              Out of Stock
-            </p>
-          )}
+            {/* Right: Details */}
+            <div className="lg:w-1/2 p-8 lg:p-16 flex flex-col justify-center mt-10">
+              <div className="mb-4">
+                <span className="text-black font-black tracking-[0.2em] text-[10px] uppercase bg-gray-100 px-4 py-2 rounded-full">
+                  {product.brand}
+                </span>
+              </div>
+              
+              <h1 className="text-4xl lg:text-6xl font-black text-gray-900 mb-2 tracking-tighter italic uppercase">
+                {product.name}
+              </h1>
+              <p className="text-xl text-gray-400 italic mb-8">{product.fragrance}</p>
 
-          {/* Description */}
-          {product.description && (
-            <p className="text-gray-600 mb-6 leading-relaxed">{product.description}</p>
-          )}
+              <div className="flex items-center gap-6 mb-10 border-y border-gray-50 py-6">
+                <div className="flex flex-col">
+                  <span className="text-4xl font-black tracking-tighter text-gray-900">
+                    ${(product.price * (1 - (product.discount || 0) / 100)).toFixed(2)}
+                  </span>
+                </div>
 
-          {/* Ingredients */}
-          {product.ingredients && (
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold mb-2">Ingredients</h3>
-              <ul className="list-disc list-inside text-gray-600">
-                {product.ingredients.map((ing, i) => (
-                  <li key={i}>{ing}</li>
-                ))}
-              </ul>
+                <div className="h-8 w-[1px] bg-gray-200" />
+
+                <div>
+                  {product.quantity > 0 ? (
+                    <div className="flex items-center gap-2 text-black font-bold text-[10px] uppercase tracking-widest">
+                      <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
+                      Available
+                    </div>
+                  ) : (
+                    <span className="text-red-500 font-bold text-[10px] uppercase tracking-widest">Out of Stock</span>
+                  )}
+                </div>
+              </div>
+
+              {/* Quantity Selector */}
+              <div className="flex items-center gap-6 mb-10">
+                <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">Amount</span>
+                <div className="flex items-center bg-gray-50 rounded-xl p-1 border border-gray-100">
+                  <button 
+                    onClick={() => setQty(Math.max(1, qty - 1))} 
+                    className="w-10 h-10 flex items-center justify-center hover:bg-white rounded-lg transition font-bold"
+                  >
+                    −
+                  </button>
+                  <span className="px-6 font-black text-gray-900 text-sm">{qty}</span>
+                  <button 
+                    onClick={() => setQty(qty + 1)} 
+                    className="w-10 h-10 flex items-center justify-center hover:bg-white rounded-lg transition font-bold"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                <button 
+                  onClick={() => handleAddToCart(false)}
+                  disabled={product.quantity <= 0}
+                  className="flex-1 bg-black text-white px-8 py-5 rounded-2xl font-bold uppercase tracking-widest text-[10px] hover:bg-gray-800 transform active:scale-95 transition-all disabled:bg-gray-200 disabled:cursor-not-allowed"
+                >
+                  Add to Cart
+                </button>
+                <button 
+                  onClick={() => handleAddToCart(true)}
+                  disabled={product.quantity <= 0}
+                  className="flex-1 bg-white text-black border-2 border-black px-8 py-5 rounded-2xl font-bold uppercase tracking-widest text-[10px] hover:bg-gray-400 hover:border-gray-500 transform active:scale-95 transition-all disabled:opacity-50 cursor-pointer"
+                >
+                  Buy Now - Fast Checkout
+                </button>
+              </div>
+
+              {/* Details */}
+              <div className="space-y-8 border-t border-gray-100 pt-10">
+                <div>
+                  <h3 className="text-[10px] font-black text-black uppercase tracking-[0.2em] mb-4">The Scent Profile</h3>
+                  <p className="text-gray-500 text-sm leading-relaxed">{product.description}</p>
+                </div>
+              </div>
             </div>
-)}
-
-
-          {/* Buttons */}
-          <div className="mt-6 flex gap-4">
-            <button onClick={handleAddToCart} className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-              Add to Cart
-            </button>
-            <button onClick={handleAddToCart} className="flex-1 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
-              Buy Now
-            </button>
           </div>
         </div>
-      </div>
-
-      {/* Similar items */}
-      <h2 className="text-2xl text-center font-semibold mt-12 mb-6 border-b pb-2">Similar Items</h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-        {products
-          .filter((p) => p.brand === product.brand && p.id !== product.id)
-          .slice(0, 4)
-          .map((similar) => (
-            <div
-              key={similar.id}
-              onClick={() => navigate(`/product/${similar.id}`)}
-              className="bg-gray-50 p-4 rounded-lg shadow hover:shadow-md transition cursor-pointer"
-            >
-              <img
-                src={similar.img}
-                alt={similar.name}
-                className="w-full h-60 object-cover rounded-md"
-              />
-              <p className="text-sm font-semibold mt-3 text-center">{similar.name}</p>
-            </div>
-          ))}
-      </div>
-    {/* <Footer/>   */}
+      </main>
     </div>
-    
   );
 }

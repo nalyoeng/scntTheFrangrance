@@ -12,6 +12,8 @@ import Login from '../components/Login'
 import HomeLayout from '../pages/HomeLayout'
 import UserManagement from '../pages/Usermanagment'
 import AdminManagement from '../pages/AdminManagement'
+import Checkout from '../components/payment'
+import CartPage from '../pages/CartPage'
 
 const Mainrouter = () => (
   <AuthProvider> {/* Wrap the whole router so every page knows who is logged in */}
@@ -22,9 +24,11 @@ const Mainrouter = () => (
             
             {/* Public Shop Routes (Inside HomeLayout for Header/Footer) */}
             <Route path='/' element={<HomeLayout />}>
-              <Route index element={<Homepage />} /> {/* Shows at "/" */}
+              <Route index element={<Homepage />} /> 
               <Route path="productgrid" element={<ProductGrid />} />
               <Route path="product/:id" element={<ProductDetail />} />
+              <Route path="cart" element={<CartPage />} />
+              <Route path="payment" element={<Checkout />} />
             </Route>
             
             {/* Auth Routes (Usually outside layouts for a clean look) */}

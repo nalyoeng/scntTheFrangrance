@@ -75,6 +75,7 @@ export default function Admin() {
   const startIndex = (page - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
   const currentProducts = products.slice(startIndex, endIndex);
+  
   return (
     <div className="h-[100vh] pt-[10vh] max-w-6xl mx-auto p-6 ">
       <AdminHeader/>

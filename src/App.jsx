@@ -12,7 +12,6 @@ import Order from "./components/order";
 const Order_s=Order
 
 const App = () => {
-
   
 
   return (
