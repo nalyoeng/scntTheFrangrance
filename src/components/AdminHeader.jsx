@@ -21,7 +21,7 @@ const AdminHeader = () => {
         {/* Desktop Nav */}
         <ul className='hidden lg:flex items-center gap-8 text-xs uppercase tracking-widest font-bold'>
           <li className={`${isActive('/admin')} hover:text-black transition-colors`}>
-                <Link to="/admin" className="flex items-center gap-2 text-nowrap">
+                <Link to="/admin/dashboard" className="flex items-center gap-2 text-nowrap">
                     <LayoutDashboard size={14}/> Dashboard
                 </Link>
             </li>

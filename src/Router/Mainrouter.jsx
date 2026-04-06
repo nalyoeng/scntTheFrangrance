@@ -15,6 +15,7 @@ import AdminManagement from '../pages/AdminManagement'
 import Checkout from '../components/payment'
 import CartPage from '../pages/CartPage'
 import AdminOrders from '../pages/AdminOrders'
+import AdminDashboard from '../pages/AdminDashboard'
 
 const Mainrouter = () => (
   <AuthProvider> {/* Wrap the whole router so every page knows who is logged in */}
@@ -42,7 +43,8 @@ const Mainrouter = () => (
               <Route path="management" element={<AdminManagement />} />
               <Route path="admins" element={<AdminManagement />} /> {/* Shows at "/admin/management" */}
               <Route path="orders" element={<AdminOrders />} />  
-               <Route path='management' element={<Admin/>}/>
+              <Route path='management' element={<Admin/>}/>
+              <Route path='dashboard' element={<AdminDashboard/>}/>
             </Route>
 
 
