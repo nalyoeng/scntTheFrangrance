@@ -1,4 +1,3 @@
-
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { getProducts } from "./storage";
@@ -60,33 +59,31 @@ export default function ProductGrid() {
   const endIndex = startIndex + productsPerPage;
   const currentProducts = filteredProducts.slice(startIndex, endIndex);
 
-
-
   return (
-    <div className="h-[100vh] pt-[10vh]">
-      {/* <Header/> */}
+    // min-h-screen ensures the page can grow longer than the viewport
+    <div className="min-h-screen h-[100vh] pt-[10vh] pb-20">
       {/* Intro */}
-      <div className="text-center max-w-full mx-auto mt-5 mb-10">
-        <h1 className="text-4xl font-bold mb-3">Scnt Perfume</h1>
-        <p className="text-gray-600">
+      <div className="text-center max-w-full mx-auto mt-5 mb-10 px-4">
+        <h1 className="text-3xl md:text-4xl font-bold mb-3">Scnt Perfume</h1>
+        <p className="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">
           Trusted by thousands of fragrance lovers, our platform offers a diverse
           selection of authentic perfumes with a high customer satisfaction rate.
         </p>
 
-        <div className="flex justify-center gap-6 mt-4">
-          <div className="bg-white px-4 py-2 rounded-full shadow">
+        <div className="flex justify-center gap-4 md:gap-6 mt-4">
+          <div className="bg-white px-4 py-2 rounded-full shadow text-sm">
             ⭐ 95%
           </div>
-          <div className="bg-white px-4 py-2 rounded-full shadow">
+          <div className="bg-white px-4 py-2 rounded-full shadow text-sm">
             ❤️ 3000
           </div>
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="flex justify-center gap-4 mb-10 ">
+      {/* Filters - flex-wrap allows them to stack on small screens */}
+      <div className="flex flex-wrap justify-center gap-3 mb-10 px-4">
         <select
-          className="border rounded p-2 cursor-pointer"
+          className="border rounded p-2 cursor-pointer text-sm w-[45%] md:w-auto"
           value={brandFilter}
           onChange={(e) => setBrandFilter(e.target.value)}
         >
@@ -103,7 +100,7 @@ export default function ProductGrid() {
         </select>
 
         <select
-          className="border rounded p-2 cursor-pointer"
+          className="border rounded p-2 cursor-pointer text-sm w-[45%] md:w-auto"
           value={priceFilter}
           onChange={(e) => setPriceFilter(e.target.value)}
         >
@@ -112,11 +109,10 @@ export default function ProductGrid() {
           <option value="100">Under $100</option>
           <option value="150">Under $150</option>
           <option value="250">Under $250</option>
-
         </select>
 
         <select
-          className="border rounded p-2 cursor-pointer"
+          className="border rounded p-2 cursor-pointer text-sm w-full md:w-auto"
           value={fragranceFilter}
           onChange={(e) => setFragranceFilter(e.target.value)}
         >
@@ -129,116 +125,106 @@ export default function ProductGrid() {
         </select>
       </div>
       
-      {/* Local Brands */}
-      <h2 className="text-center text-2xl font-semibold mb-6">Local Brands</h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto mb-12">
+      {/* Local Brands - improved grid scaling */}
+      <h2 className="text-center text-xl md:text-2xl font-semibold mb-6">Local Brands</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6 max-w-6xl mx-auto mb-12 px-4">
         {localBrands.map((brand) => (
           <div
             key={brand.name}
-            onClick={() => setBrandFilter(brand.name)} // filter products by brand
-            className={`bg-white rounded-lg shadow hover:shadow-lg cursor-pointer flex flex-col items-center justify-center p-6 
-              ${brandFilter === brand.name ? "" : ""}`}
+            onClick={() => setBrandFilter(brand.name)}
+            className="bg-white rounded-lg shadow hover:shadow-lg cursor-pointer flex flex-col items-center justify-center p-4 md:p-6 transition-transform active:scale-95"
           >
             <img
               src={brand.img}
               alt={brand.name}
-              className="w-20 h-full  object-contain mb-3" 
+              className="w-16 md:w-20 h-16 md:h-20 object-contain mb-3" 
             />
-            <p className="font-semibold text-base text-center">{brand.name}</p>
+            <p className="font-semibold text-xs md:text-base text-center">{brand.name}</p>
           </div>
         ))}
       </div>
+
       {/* Promo Slideshow */}
-      <h2 className="text-center text-2xl font-semibold mb-6">DON'T MISS OUT!</h2>
-        <div className="max-w-4xl mx-auto mb-12">
-          <img
-            src={promoImages[promoIndex]}
-            alt="promo"
-            className="w-full h-120 object-cover rounded shadow transition-opacity duration-500"
-          />
-        </div>
-        <div className="flex justify-center gap-2 mt-2">
-          {promoImages.map((_, i) => (
-            <span
-              key={i}
-              onClick={() => setPromoIndex(i)}
-              className={`w-3 h-3 rounded-full cursor-pointer ${
-                promoIndex === i ? "bg-black" : "bg-gray-400"
-              }`}
-            ></span>
-          ))}
-        </div>
+      <h2 className="text-center text-xl md:text-2xl font-semibold mb-6">DON'T MISS OUT!</h2>
+      <div className="max-w-5xl mx-auto mb-6 px-4">
+        <img
+          src={promoImages[promoIndex]}
+          alt="promo"
+          className="w-full h-48 sm:h-80 md:h-[500px] object-cover rounded shadow transition-opacity duration-500"
+        />
+      </div>
+      <div className="flex justify-center gap-2 mt-2 mb-12">
+        {promoImages.map((_, i) => (
+          <span
+            key={i}
+            onClick={() => setPromoIndex(i)}
+            className={`w-2 h-2 md:w-3 md:h-3 rounded-full cursor-pointer ${
+              promoIndex === i ? "bg-black" : "bg-gray-400"
+            }`}
+          ></span>
+        ))}
+      </div>
 
-
-
-
-      {/* Products */}
-      <div className=" grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-6xl mx-auto mt-4">
+      {/* Products Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-6 max-w-6xl mx-auto mt-4 px-4">
         {currentProducts.map((p) => (
           <div
             key={p.id}
             onClick={() => navigate(`/product/${p.id}`)}
-            className="bg-white rounded shadow hover:shadow-xl transition cursor-pointer"
+            className="bg-white rounded shadow hover:shadow-xl transition cursor-pointer flex flex-col"
           >
-          <div className="relative">
+            <div className="relative">
               <img
-                  src={p.img}
-                  alt={p.name}
-                  className="w-full h-50 object-cover rounded-t-md"
-                />
-
-
+                src={p.img}
+                alt={p.name}
+                className="w-full h-40 md:h-50 object-cover rounded-t-md"
+              />
               {p.discount && (
-                <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">
+                <div className="absolute top-2 left-2 bg-red-500 text-white text-[10px] md:text-xs px-2 py-1 rounded font-bold">
                   {p.discount}% OFF
                 </div>
               )}
-              
-                <div className="absolute bottom-2 right-2 bg-gray-600 text-white text-xs px-2 py-1 rounded">
-                     {p.quantity >0 ? `In Stock: ${p.quantity}` : "Out of Stock"}
-                </div>
-            
-          </div>
-          <div className="p-4">
-              <h3 className="font-semibold">{p.name}</h3>
-              <p className="text-sm text-gray-500">{p.brand}</p>
-              <p className="text-sm text-gray-400">{p.fragrance}</p>
+              <div className="absolute bottom-2 right-2 bg-gray-900/70 text-white text-[10px] px-2 py-1 rounded">
+                   {p.quantity > 0 ? `Stock: ${p.quantity}` : "Out of Stock"}
+              </div>
+            </div>
+            <div className="p-3 md:p-4 flex-grow">
+                <h3 className="font-semibold text-sm md:text-base line-clamp-1">{p.name}</h3>
+                <p className="text-xs text-gray-500">{p.brand}</p>
+                <p className="text-[10px] text-gray-400 uppercase tracking-tighter">{p.fragrance}</p>
 
-              {p.discount ? (
-                <div className="mt-2">
-                  {/* Original price crossed out */}
-                  <p className="text-sm text-gray-500 line-through">${p.price}</p>
-                  {/* Discounted price */}
-                  <p className="text-lg font-bold text-red-600">
-                    ${ (p.price * (1 - p.discount / 100)).toFixed(2) }
-                  </p>
-                </div>
-              ) : (
-                <p className="text-lg font-bold mt-2">${p.price}</p>
-              )}
-          </div>
+                {p.discount ? (
+                  <div className="mt-2">
+                    <p className="text-xs text-gray-400 line-through">${p.price}</p>
+                    <p className="text-base md:text-lg font-bold text-red-600">
+                      ${ (p.price * (1 - p.discount / 100)).toFixed(2) }
+                    </p>
+                  </div>
+                ) : (
+                  <p className="text-base md:text-lg font-bold mt-2">${p.price}</p>
+                )}
+            </div>
           </div>
         ))}
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center items-center gap-2 mt-10">
-        {[...Array(totalPages)].map((items, i) => (
-          <span
-            key={i}
-            onClick={() => setPage(i + 1)}
-            className={`w-3 h-3 rounded-full cursor-pointer ${
-              page === i + 1 ? "bg-black" : "bg-gray-400"
-            }`}
-          ></span>
-        ))}
-        <div className="ml-4 border px-3 py-1 rounded bg-white">
+      <div className="flex flex-wrap justify-center items-center gap-2 mt-12 px-4">
+        <div className="flex gap-2">
+          {[...Array(totalPages)].map((_, i) => (
+            <span
+              key={i}
+              onClick={() => setPage(i + 1)}
+              className={`w-2.5 h-2.5 md:w-3 md:h-3 rounded-full cursor-pointer transition-colors ${
+                page === i + 1 ? "bg-black" : "bg-gray-300"
+              }`}
+            ></span>
+          ))}
+        </div>
+        <div className="ml-4 border px-3 py-1 rounded bg-white text-sm font-medium">
           {page} / {totalPages}
         </div>
       </div>
-      {/* <Footer/> */}
     </div>
   );
 }
-
-

@@ -1,218 +1,45 @@
-.checkout-container {
-  display: flex;
-  gap: 20px;
-  padding: 40px;
-  margin: auto;
-  font-family: Arial, sans-serif;
-  width: 100%;
-  max-width: 1400px;
-  margin-top: 200px;
+/* /* Custom Animations */
+@keyframes zoom-in {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
 }
 
-.left {
-  flex: 3;
+.animate-in.zoom-in {
+    animation: zoom-in 0.3s ease-out;
 }
 
-.right {
-  flex: 2;
-  background: #eee;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-/* ITEMS */
-.items-box {
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  padding: 15px;
-  border-radius: 5px;
-  margin-bottom: 20px;
-}
-
-.items-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.remove-all {
-  cursor: pointer;
-  font-size: 14px;
-}
-
-/* ITEM CARD */
-.item-card {
-  display: flex;
-  align-items: center;
-  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
-  border-radius: 8px;
-  padding: 10px;
-  margin-top: 15px;
-  position: relative;
-}
-
-.item-card img {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  margin-right: 15px;
-}
-
-.item-info {
-  flex: 1;
-}
-
-.item-title {
-  color: red;
-  margin-bottom: 5px;
-}
-
-.price {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.new-price {
-  font-weight: bold;
-  font-size: 18px;
-}
-
-.old-price {
-  text-decoration: line-through;
-  font-size: 14px;
-  color: gray;
-}
-
-/* QUANTITY */
-.quantity {
-  margin-top: 10px;
-}
-
-.quantity button {
-  width: 40px;
-  height: 40px;
-  margin: 0 5px;
-  cursor: pointer;
-}
-
-/* REMOVE BUTTON */
-.remove {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  color: red;
-  cursor: pointer;
-}
-
-/* SUMMARY */
-.summary-box {
-  background: #eee;
-  padding: 20px;
-  border-radius: 5px;
-}
-
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  margin: 10px 0;
-}
-
-.total {
-  display: flex;
-  justify-content: space-between;
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-/* INPUT STYLING */
-.input {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
-}
-
-.input label {
-  margin-bottom: 8px;
-  font-weight: 500;
-  font-size: 14px;
-}
-
-.input input {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
-}
-
-/* ROW FOR SIDE BY SIDE */
-.row {
-  display: flex;
-  gap: 15px;
-}
-
-.row .input {
-  flex: 1;
-}
-
-/* PAYMENT METHODS */
-.payment-methods {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 25px;
-  justify-content: space-around;
-  margin-top: 20px;
-}
+/* Remove the old margin-top and flex layout from here 
+   since we are using Tailwind for the main structure now */
 
 .payment-methods img {
-  width: 140px;
-  height: 90px;
-  object-fit: contain;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  cursor: pointer;
-  transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
-.payment-methods img:hover {
-  border-color: #333;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+/* Specific styling for your item card if Tailwind isn't enough */
+.item-card img {
+    object-fit: cover;
 }
 
-.payment-methods img.active {
-  border-color: #e01276;
-  box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
-}
-.pay-btn {
-  width: 100%;
-  padding: 12px;
-  background: rgb(245, 27, 27);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 30px;
-  color: white;
-}
-.pay-btn:hover{
-  background-color: rgb(244, 49, 49);
+/* Optional: Smooth quantity buttons */
+button {
+    transition: transform 0.1s ease, background-color 0.2s ease;
 }
 
-.modal-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
+button:active {
+    transform: scale(0.95);
 }
 
-.modal-content {
-    background: white;
-    padding: 50px;
-    border-radius: 40px;
-    text-align: center;
-    max-width: 400px;
+/* Scrollbar styling for a cleaner look */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #e5e7eb;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #d1d5db;
 }
