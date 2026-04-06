@@ -2,11 +2,8 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { getProducts } from "./storage";
-import Header from "../components/Header";
+
 export const products = getProducts();
-
-import Footer from "../components/Footer";
-
 
 export default function ProductGrid() {
   const navigate = useNavigate();
@@ -23,17 +20,17 @@ export default function ProductGrid() {
   }, []);
 
   // Local brands
-const localBrands = [
-  { name: "The LAB", img: "/brands/thelab.jpg" },
-  { name: "Amber", img: "/brands/amber.jpg" },
-  { name: "mera", img: "/brands/mera.jpg" },
-  { name: "ROMYANA", img: "/brands/romyana.jpg" },
-  { name: "TARO", img: "/brands/taro.jpg" },
-  { name: "AKA.BT", img: "/brands/aka_bt.jpg" },
-  { name: "BOSBA SCENT", img: "/brands/bosba_scent.jpg" },
-  { name: "OF YOUTH OF MAY", img: "/brands/youth.jpg" },
-  { name: "MOUNTAINS AND RAIN", img: "/brands/mountain.jpg" }
-];
+  const localBrands = [
+    { name: "The LAB", img: "/brands/thelab.jpg" },
+    { name: "Amber", img: "/brands/amber.jpg" },
+    { name: "mera", img: "/brands/mera.jpg" },
+    { name: "ROMYANA", img: "/brands/romyana.jpg" },
+    { name: "TARO", img: "/brands/taro.jpg" },
+    { name: "AKA.BT", img: "/brands/aka_bt.jpg" },
+    { name: "BOSBA SCENT", img: "/brands/bosba_scent.jpg" },
+    { name: "OF YOUTH OF MAY", img: "/brands/youth.jpg" },
+    { name: "MOUNTAINS AND RAIN", img: "/brands/mountain.jpg" }
+  ];
 
   // Pagination state
   const [page, setPage] = useState(1);
@@ -67,7 +64,7 @@ const localBrands = [
 
   return (
     <div className="h-[100vh] pt-[10vh]">
-      <Header/>
+      {/* <Header/> */}
       {/* Intro */}
       <div className="text-center max-w-full mx-auto mt-5 mb-10">
         <h1 className="text-4xl font-bold mb-3">Scnt Perfume</h1>
@@ -130,9 +127,8 @@ const localBrands = [
           <option value="Oriental">Oriental</option>
           <option value="Citrus">Citrus</option>
         </select>
-
       </div>
-
+      
       {/* Local Brands */}
       <h2 className="text-center text-2xl font-semibold mb-6">Local Brands</h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto mb-12">
@@ -152,11 +148,6 @@ const localBrands = [
           </div>
         ))}
       </div>
-
-
-
-
-
       {/* Promo Slideshow */}
       <h2 className="text-center text-2xl font-semibold mb-6">DON'T MISS OUT!</h2>
         <div className="max-w-4xl mx-auto mb-12">
@@ -193,7 +184,7 @@ const localBrands = [
               <img
                   src={p.img}
                   alt={p.name}
-                  className="w-full h-32 object-cover rounded-t-md"
+                  className="w-full h-50 object-cover rounded-t-md"
                 />
 
 
@@ -245,7 +236,7 @@ const localBrands = [
           {page} / {totalPages}
         </div>
       </div>
-      <Footer/>
+      {/* <Footer/> */}
     </div>
   );
 }
