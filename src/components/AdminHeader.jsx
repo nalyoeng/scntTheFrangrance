@@ -1,27 +1,86 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { LayoutDashboard, Package, ShoppingCart, Users, Search, LogOut, Menu, X } from 'lucide-react';
 
 const AdminHeader = () => {
-  return (
-    <div className='w-full h-[10vh] px-5 py-3 flex items-center justify-between fixed top-0 left-0 z-50 bg-white shadow-md'>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&family=Fira+Code&display=swap" rel="stylesheet"></link>
-        <div className='w-[60%] flex justify-around items-center'>
-            <ul className='w-[50%] flex justify-between pl-3 font-medium lg:text-xl'>
-                <li className='hover:text-gray-500 cursor-pointer'>Dash board</li>
-                <li className='hover:text-gray-500 cursor-pointer'>Products</li>
-                <li className='hover:text-gray-500 cursor-pointer'>Orders</li>
-            </ul>
-            <h1 className='font-bold text-4xl'>scnt.</h1>
-        </div>
-        <div className='lg:w-[20%] w-[30%]'>
-            <div className='w-[100%] border-1 border-gray-300 rounded-lg flex items-center'>
-                <input type="text" placeholder='search' className='outline-0 p-1.5'/>
-                <svg className='ml-auto mr-2 bi bi-search' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                </svg>
-            </div>
-        </div>
-    </div>
-  )
-}
+  const location = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-export default AdminHeader
+  // Helper to highlight active link
+  const isActive = (path) => location.pathname === path ? 'text-black font-bold' : 'text-gray-400';
+
+  return (
+    <nav className='w-full h-[10vh] px-6 py-3 flex items-center justify-between fixed top-0 left-0 z-[100] bg-white border-b border-gray-100 shadow-sm'>
+      {/* 1. LOGO & BACK TO SHOP */}
+      <div className='flex items-center gap-8'>
+        <Link to="/" className='font-bold text-3xl tracking-tighter'>scnt. <span className='text-[10px] bg-black text-white px-2 py-0.5 rounded ml-1 uppercase tracking-widest italic'>Admin</span></Link>
+        
+        {/* Desktop Nav */}
+        <ul className='hidden lg:flex items-center gap-8 text-xs uppercase tracking-widest font-bold'>
+          <li className={`${isActive('/admin')} hover:text-black transition-colors`}>
+            <Link to="/admin" className="flex items-center gap-2"><LayoutDashboard size={14}/> Dashboard</Link>
+          </li>
+          <li className={`${isActive('/admin/management')} hover:text-black transition-colors`}>
+            <Link to="/admin/management" className="flex items-center gap-2"><Package size={14}/> Products</Link>
+          </li>
+          <li className={`${isActive('/admin/users')} hover:text-black transition-colors`}>
+            <Link to="/admin/users" className="flex items-center gap-2"><Users size={14}/> Users</Link>
+          </li>
+        </ul>
+      </div>
+
+      {/* 2. SEARCH & ACTIONS */}
+      <div className='flex items-center gap-4'>
+        {/* Search Bar - Hidden on mobile */}
+        <div className='hidden md:flex items-center bg-gray-50 border border-gray-200 rounded-lg px-3 py-1.5 focus-within:ring-1 focus-within:ring-black transition-all'>
+          <input 
+            type="text" 
+            placeholder='Search records...' 
+            className='bg-transparent outline-none text-xs w-40 lg:w-60'
+          />
+          <Search size={14} className="text-gray-400" />
+        </div>
+
+        {/* Exit Admin Button */}
+        <Link 
+          to="/" 
+          className='flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-xs font-bold transition-all'
+        >
+          <LogOut size={14} />
+          <span className='hidden sm:inline'>Exit Admin</span>
+        </Link>
+
+        {/* Mobile Menu Toggle */}
+        <button 
+          className='lg:hidden p-2 text-black'
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* 3. MOBILE MENU DROPDOWN */}
+      {isMenuOpen && (
+        <div className='absolute top-[10vh] left-0 w-full bg-white border-b border-gray-100 p-6 flex flex-col gap-6 lg:hidden animate-in slide-in-from-top duration-300 shadow-xl'>
+           <Link to="/admin" onClick={() => setIsMenuOpen(false)} className='text-sm font-bold uppercase tracking-widest flex items-center gap-4'>
+            <LayoutDashboard size={18}/> Dashboard
+          </Link>
+          <Link to="/admin/management" onClick={() => setIsMenuOpen(false)} className='text-sm font-bold uppercase tracking-widest flex items-center gap-4'>
+            <Package size={18}/> Products
+          </Link>
+          <Link to="/admin/users" onClick={() => setIsMenuOpen(false)} className='text-sm font-bold uppercase tracking-widest flex items-center gap-4'>
+            <Users size={18}/> Users
+          </Link>
+          <div className='pt-4 border-t border-gray-50'>
+             <div className='flex items-center bg-gray-50 border border-gray-200 rounded-lg px-4 py-3'>
+              <input type="text" placeholder='Search...' className='bg-transparent outline-none text-sm w-full' />
+              <Search size={18} className="text-gray-400" />
+            </div>
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+};
+
+export default AdminHeader;

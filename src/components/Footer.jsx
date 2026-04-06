@@ -8,7 +8,7 @@ const Footer = () => {
         
         {/* Brand Side */}
         <div className='text-center md:text-left'>
-          <h2 className='text-white text-2xl font-bold tracking-tighter'>scnt.</h2>
+          <h2 className='text-black text-2xl font-bold tracking-tighter'>scnt.</h2>
           <p className='text-slate-400 text-sm mt-2 max-w-[250px]'>
             Quiet luxury and complex scents for the modern home.
           </p>
