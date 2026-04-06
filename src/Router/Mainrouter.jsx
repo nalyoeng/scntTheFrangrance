@@ -14,6 +14,7 @@ import UserManagement from '../pages/Usermanagment'
 import AdminManagement from '../pages/AdminManagement'
 import Checkout from '../components/payment'
 import CartPage from '../pages/CartPage'
+import AdminOrders from '../pages/AdminOrders'
 
 const Mainrouter = () => (
   <AuthProvider> {/* Wrap the whole router so every page knows who is logged in */}
@@ -36,9 +37,11 @@ const Mainrouter = () => (
 
             {/* 🛡️ Protected Admin Routes (Only accessible by logged-in Admins) */}
             <Route path="/admin" element={<ProtectedRoute />}>
-               <Route index element={<Admin />} /> {/* Shows at "/admin" */}
+               <Route index element={<AdminOrders/>} /> {/* Shows at "/admin" */}
                <Route path="users" element={<UserManagement />} /> {/* Shows at "/admin/users" */}
-               <Route path="management" element={<AdminManagement />} /> {/* Shows at "/admin/management" */}
+               <Route path="admins" element={<AdminManagement />} /> {/* Shows at "/admin/management" */}
+               <Route path='orders' element={<AdminOrders/>}/>
+               <Route path='management' element={<Admin/>}/>
             </Route>
 
             {/* Catch-all: If user types a wrong URL, go home */}
