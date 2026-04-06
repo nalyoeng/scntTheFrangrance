@@ -21,10 +21,10 @@ const AdminHeader = () => {
             <Link to="/admin" className="flex items-center gap-2"><LayoutDashboard size={14}/> Dashboard</Link>
           </li>
           <li className={`${isActive('/admin/management')} hover:text-black transition-colors`}>
-            <Link to="/admin/management" className="flex items-center gap-2"><Package size={14}/> Products</Link>
+            <Link to="/admin" className="flex items-center gap-2"> Products</Link>
           </li>
           <li className={`${isActive('/admin/users')} hover:text-black transition-colors`}>
-            <Link to="/admin/users" className="flex items-center gap-2"><Users size={14}/> Users</Link>
+            <Link to="/admin/orders" className="flex items-center gap-2"> Order</Link>
           </li>
         </ul>
       </div>
