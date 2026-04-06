@@ -40,7 +40,9 @@ const Mainrouter = () => (
               <Route index element={<Admin />} />
               <Route path="users" element={<UserManagement />} />
               <Route path="management" element={<AdminManagement />} />
-              <Route path="orders" element={<AdminOrders />} />   {/* <-- Add this */}
+              <Route path="admins" element={<AdminManagement />} /> {/* Shows at "/admin/management" */}
+              <Route path="orders" element={<AdminOrders />} />  
+               <Route path='management' element={<Admin/>}/>
             </Route>
 
 
