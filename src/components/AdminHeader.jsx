@@ -30,8 +30,8 @@ const AdminHeader = () => {
                     <ShoppingBag size={14}/> Orders
                 </Link>
             </li>
-            <li className={`${isActive('/admin/management')} hover:text-black transition-colors`}>
-                <Link to="/admin/management" className="flex items-center gap-2 text-nowrap">
+            <li className={`${isActive('/admin')} hover:text-black transition-colors`}>
+                <Link to="/admin" className="flex items-center gap-2 text-nowrap">
                     <Settings size={14}/> CRUD / Manage
                 </Link>
             </li>
